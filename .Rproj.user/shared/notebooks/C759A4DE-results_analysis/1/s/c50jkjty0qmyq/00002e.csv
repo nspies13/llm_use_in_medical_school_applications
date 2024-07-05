@@ -1,0 +1,9 @@
+"0","tbl_regression(mv_model, exponentiate = T) |> 
+  bold_labels() |>
+  italicize_levels() |> 
+  add_q() |> 
+  bold_p(q = T)
+"
+"1","add_q: Adjusting p-values with
+`stats::p.adjust(x$table_body$p.value, method = ""fdr"")`
+"

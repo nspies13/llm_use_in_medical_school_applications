@@ -1,0 +1,128 @@
+---
+title: "LLM Use in Medical School Applications"
+author: "Nick Spies, MD"
+format: html
+editor: visual
+---
+
+```{r}
+
+library(tidyverse)
+library(knitr)
+library(httr)
+
+personal_comments <- 
+  bind_rows(
+    readxl::read_xlsx("../data/2023-2024 Personal Comments.xlsx") |> mutate(year = "2024"),
+    readxl::read_xlsx("../data/2021-2022 Personal Comments.xlsx") |> mutate(year = "2022")
+  ) |> janitor::clean_names()
+
+personal_comments_already_run <- readRDS("../results/personal_comments_with_gptzero_preds.rds")
+
+personal_comments_not_run <- 
+  personal_comments |> 
+    left_join(personal_comments_already_run) |> 
+    filter(is.na(Prediction))
+
+personal_comments_to_run <- personal_comments_not_run |> group_by(year) |> slice_head(n = 100)
+
+```
+
+## Make API Inputs
+
+```{r}
+
+### Add a column for the length of the text
+personal_comments_sanitized <- 
+  personal_comments_to_run |> 
+    rowwise() |> 
+    mutate(string_length = str_length(text), 
+           sanitized_inputs = str_replace_all(text, '"\\n|\t|\n|\r|\\t|\\r|\\"|\\(|\\)|\\!|\\|\\\'"', " "),
+           sanitized_inputs = str_replace_all(sanitized_inputs, "\\'", ""), 
+           sanitized_inputs = gsub("\\\\", "", sanitized_inputs))
+
+### Make first 2500 characters of text a new column called "API inputs"
+personal_comments_sanitized <- personal_comments_sanitized |> mutate(api_inputs = paste0("{\n  \"document\": \"", str_sub(sanitized_inputs, 1, max(string_length, 1000)), '",\n  \"version\": \"2024-01-09\",\n  \"multilingual\": false\n}'))
+
+```
+### Make API Calls
+
+```{r}
+
+### Make API calls
+library(httr)
+
+url <- "https://api.gptzero.me/v2/predict/text"
+payload <- 
+encode <- "json"
+
+responses <- 
+  map(personal_comments_sanitized$api_inputs, 
+    ~ VERB("POST", url, body = .x[[1]], add_headers('x-api-key' = gpt_zero_api_key), content_type("application/json"), accept("application/json"), encode = encode))
+
+```
+### Parse JSON Output from API
+
+```{r} 
+
+parsed_outputs <- map(responses, ~jsonlite::fromJSON(content(.x, "text")))
+
+personal_comments_with_gptzero_preds <- 
+  personal_comments_sanitized |> 
+    ungroup() |>
+    mutate(
+      api_output = responses, 
+      parsed_output = parsed_outputs, 
+      document_output = parsed_outputs |> map("documents"), 
+      Prediction = parsed_output |> map("documents") |> map("predicted_class"),
+      `Probability Human` = parsed_output |> map("documents") |> map("class_probabilities") |> map("human"),
+      `Probability AI` = parsed_output |> map("documents") |> map("class_probabilities") |> map("ai"),
+      `Probability Mixed` = parsed_output |> map("documents") |> map("class_probabilities") |> map("mixed"),
+      Confidence = parsed_output |> map("documents") |> map("confidence_score"),
+      Burstiness = parsed_output |> map("documents") |> map("overall_burstiness"),
+      across(Prediction:Burstiness, ~unlist(.)), 
+      across(c(year, essay_type, Prediction), ~factor(.))) 
+
+```
+
+### Combine With Previously Run Text
+
+```{r}
+
+personal_comments_with_gpt_zero_preds_combined <- bind_rows(personal_comments_already_run, personal_comments_with_gptzero_preds)
+
+personal_comments_with_gpt_zero_preds_combined |> saveRDS("../results/personal_comments_with_gptzero_preds_combined.rds")
+
+```
+
+### Make Comparison Table
+
+```{r}
+
+library(gtsummary)
+
+personal_comments_with_gpt_zero_preds_combined |> 
+  distinct(amcas_id, year, Prediction, `Probability AI`, `Probability Human`, Confidence, Burstiness) |>
+  select(-amcas_id) |>
+  tbl_summary(by = year, missing = "no") |> 
+    add_p() |>
+    add_q() |>
+    add_ci(method = list(all_continuous() ~ "wilcox.test")) |> 
+    bold_p(q = T) |> 
+    bold_labels() |>
+    italicize_levels()
+
+
+
+```
+
+### Plot Predicted Probs by Year
+```{r}
+
+gg_predicted_probs_by_year <- 
+  personal_comments_with_gpt_zero_preds_combined |> 
+    ggplot(aes(x = `Probability AI`, color = year)) + 
+    stat_ecdf(linewidth = 1.5)
+gg_predicted_probs_by_year
+
+```

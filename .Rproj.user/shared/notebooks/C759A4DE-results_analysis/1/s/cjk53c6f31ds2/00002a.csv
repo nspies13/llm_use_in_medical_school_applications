@@ -1,0 +1,26 @@
+"0","gt_uv_all <- 
+  tbl_uvregression(model_input |> transmute(Year, Essay, Age, `Self-Reported Gender`, Program, Visa, GPA = GPA * 10, MCAT, `Probability Human`), glm, y = `Probability Human`, exponentiate = T) |> 
+    bold_labels() |>
+    italicize_levels() |> 
+    add_n(location = ""level"") |> 
+    add_q() |> 
+    bold_p(q = T) |>
+    as_gt() |> 
+    gt::tab_header(title = ""Univariate Analysis"", subtitle = ""Application Metadata vs. Predicted Human-Generated Text"")
+"
+"1","add_q: Adjusting p-values with
+`stats::p.adjust(x$table_body$p.value, method = ""fdr"")`
+"
+"0","gt_uv_all <- "
+"0","  tbl_uvregression(model_input |> transmute(Year, Essay, Age, `Self-Reported Gender`, Program, Visa, GPA = GPA * 10, MCAT, `Probability Human`), glm, y = `Probability Human`, exponentiate = T) |> "
+"0","    bold_labels() |>"
+"0","    italicize_levels() |> "
+"0","    add_n(location = ""level"") |> "
+"0","    add_q() |> "
+"0","    bold_p(q = T) |>"
+"0","    as_gt() |> "
+"0","    gt::tab_header(title = ""Univariate Analysis"", subtitle = ""Application Metadata vs. Predicted Human-Generated Text"")"
+"1","add_q: Adjusting p-values with
+`stats::p.adjust(x$table_body$p.value, method = ""fdr"")`
+"
+"0","gt_uv_all"

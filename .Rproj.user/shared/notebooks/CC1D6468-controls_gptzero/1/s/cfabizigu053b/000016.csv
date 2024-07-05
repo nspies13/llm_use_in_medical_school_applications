@@ -1,0 +1,54 @@
+"0","controls_with_gpt_zero_preds_combined |> 
+  mutate(model = ifelse(is.na(model), ""Negative Control"", model)) |>
+  distinct(amcas_id, year, model, Prediction, `Probability AI`, `Probability Human`, Confidence, Burstiness) |>
+  select(-amcas_id, -year) |>
+  tbl_summary(by = model, missing = ""no"", type = list(Prediction ~ ""categorical"", `Probability AI` ~ ""continuous"", `Probability Human` ~ ""continuous"", Confidence ~ ""continuous"", Burstiness ~ ""continuous"")) |> 
+    add_p() |>
+    add_q() |>
+    add_ci(method = list(all_continuous() ~ ""wilcox.test"")) |> 
+    bold_p(q = T) |> 
+    bold_labels() |>
+    italicize_levels()
+"
+"2","add_q: Adjusting p-values with
+`stats::p.adjust(x$table_body$p.value, method = ""fdr"")`"
+"2","There was an warning for variable 'Prediction':
+ [1m[33mWarning[39m:[22m
+[38;5;255mThere were 6 warnings in `mutate()`.
+The first warning was:[39m
+[38;5;255m[36mℹ[38;5;255m In argument: `ci = calculate_prop_ci(...)`.
+[36mℹ[38;5;255m In row 1.[39m
+Caused by warning in `stats::prop.test()`:
+[33m![39m Chi-squared approximation may be incorrect
+[38;5;255m[36mℹ[38;5;255m Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 5 remaining warnings.[39m
+"
+"2","There was an warning for variable 'Probability AI':
+ [1m[33mWarning[39m:[22m
+[38;5;255mThere were 3 warnings in `mutate()`.
+The first warning was:[39m
+[38;5;255m[36mℹ[38;5;255m In argument: `ci = calculate_mean_ci(...)`.
+[36mℹ[38;5;255m In row 3.[39m
+Caused by warning in `wilcox.test.default()`:
+[33m![39m requested conf.level not achievable
+[38;5;255m[36mℹ[38;5;255m Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 2 remaining warnings.[39m
+"
+"2","There was an warning for variable 'Probability Human':
+ [1m[33mWarning[39m:[22m
+[38;5;255mThere were 5 warnings in `mutate()`.
+The first warning was:[39m
+[38;5;255m[36mℹ[38;5;255m In argument: `ci = calculate_mean_ci(...)`.
+[36mℹ[38;5;255m In row 2.[39m
+Caused by warning:
+[33m![39m cannot compute confidence interval when all observations are zero or tied
+[38;5;255m[36mℹ[38;5;255m Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 4 remaining warnings.[39m
+"
+"2","There was an warning for variable 'Confidence':
+ [1m[33mWarning[39m:[22m
+[38;5;255mThere were 3 warnings in `mutate()`.
+The first warning was:[39m
+[38;5;255m[36mℹ[38;5;255m In argument: `ci = calculate_mean_ci(...)`.
+[36mℹ[38;5;255m In row 3.[39m
+Caused by warning in `wilcox.test.default()`:
+[33m![39m requested conf.level not achievable
+[38;5;255m[36mℹ[38;5;255m Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 2 remaining warnings.[39m
+"

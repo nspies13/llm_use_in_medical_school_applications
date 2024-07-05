@@ -1,0 +1,29 @@
+"0","#| fig.width: 8"
+"0","#| fig.height: 5"
+"0",""
+"0","suppressPackageStartupMessages(library(ggpmisc))"
+"0",""
+"0","ggplot(model_input |> dplyr::filter(Year == 2024), aes(`Probability AI`, MCAT)) + "
+"0","  geom_point() + "
+"0","  stat_poly_eq(label.x = 0.9, label.y = 0.1) + "
+"0","  stat_poly_line()"
+"2","Warning:"
+"2"," [38;5;255mRemoved 2 rows containing non-finite outside the scale range (`stat_poly_eq()`).[39m
+"
+"2","Warning:"
+"2"," [38;5;255mRemoved 2 rows containing non-finite outside the scale range (`stat_poly_line()`).[39m
+"
+"2","Warning:"
+"2"," [38;5;255mThe `scale_name` argument of `continuous_scale()` is deprecated as of ggplot2 3.5.0.
+[90mThis warning is displayed once every 8 hours.[38;5;255m
+[90mCall `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.[38;5;255m[39m
+"
+"2","Warning:"
+"2"," [38;5;255mThe `trans` argument of `continuous_scale()` is deprecated as of ggplot2 3.5.0.
+[36mℹ[38;5;255m Please use the `transform` argument instead.
+[90mThis warning is displayed once every 8 hours.[38;5;255m
+[90mCall `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.[38;5;255m[39m
+"
+"2","Warning:"
+"2"," [38;5;255mRemoved 2 rows containing missing values or values outside the scale range (`geom_point()`).[39m
+"

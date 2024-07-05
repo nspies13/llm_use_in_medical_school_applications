@@ -1,0 +1,31 @@
+"0","gt_uv_2024 <- 
+  tbl_uvregression(model_input |> dplyr::filter(Year == 2024) |> transmute(Essay, Age, `Self-Reported Gender`, Program, Visa, MCAT, GPA = GPA * 10, `Probability Human`), glm, y = `Probability Human`, exponentiate = T) |> 
+    bold_labels() |>
+    italicize_levels() |> 
+    add_n(location = ""level"") |> 
+    add_q() |> 
+    bold_p(q = T) |> 
+    as_gt() |> 
+    gt::tab_header(title = ""Univariate Analysis"", subtitle = ""Application Metadata vs. Predicted Human-Generated Text"")
+"
+"1","add_q: Adjusting p-values with
+`stats::p.adjust(x$table_body$p.value, method = ""fdr"")`
+"
+"0","gt_uv_2024 <- "
+"0","  tbl_uvregression(model_input |> dplyr::filter(Year == 2024) |> transmute(Essay, Age, `Self-Reported Gender`, Program, Visa, MCAT, GPA = GPA * 10, `Probability Human`), glm, y = `Probability Human`, exponentiate = T) |> "
+"0","    bold_labels() |>"
+"0","    italicize_levels() |> "
+"0","    add_n(location = ""level"") |> "
+"0","    add_q() |> "
+"0","    bold_p(q = T) |> "
+"0","    as_gt() |> "
+"0","    gt::tab_header(title = ""Univariate Analysis"", subtitle = ""Application Metadata vs. Predicted Human-Generated Text"")"
+"1","add_q: Adjusting p-values with
+`stats::p.adjust(x$table_body$p.value, method = ""fdr"")`
+"
+"0","gt::gtsave(gt_uv_2024, ""../figures/univariate_analysis.html"")"
+"0","gt::gtsave(gt_uv_2024, ""../figures/univariate_analysis.docx"")"
+"0",""
+"0","gt_uv_202"
+"2","Error: object 'gt_uv_202' not found
+"

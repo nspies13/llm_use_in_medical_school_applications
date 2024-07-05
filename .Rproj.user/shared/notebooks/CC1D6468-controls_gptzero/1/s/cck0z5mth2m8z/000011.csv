@@ -1,0 +1,7 @@
+"0","gg_predicted_probs_by_year <- 
+  controls_with_gpt_zero_preds_combined |> 
+    ggplot(aes(x = `Probability AI`, color = year, alpha = essay_type)) + 
+    stat_ecdf(linewidth = 1.5)
+"
+"2","Error: object 'controls_with_gpt_zero_preds_combined' not found
+"

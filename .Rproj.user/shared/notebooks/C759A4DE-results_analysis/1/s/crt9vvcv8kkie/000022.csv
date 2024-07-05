@@ -1,0 +1,2 @@
+"0",""
+"0","tbl_summary(bind_rows(controls |> transmute(Year = year, `Probability Human`), model_input), by = Year)  "

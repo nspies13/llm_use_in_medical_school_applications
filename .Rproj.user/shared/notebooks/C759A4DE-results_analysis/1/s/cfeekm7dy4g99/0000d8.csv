@@ -1,0 +1,50 @@
+"0","ggsave(""../figures/waterfall_probability_plot.png"", width = 10, height = 5, dpi = 600)"
+"2","Warning in geom_texthline(label = ""Completely AI-Generated"", yintercept = 0.5,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"2","Warning in geom_texthline(label = ""Mostly AI-Generated"", yintercept = 0.25,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"2","Warning in geom_texthline(label = ""Mostly Human-Generated"", yintercept = -0.25,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"2","Warning in geom_texthline(label = ""Completely Human-Generated"", yintercept = -0.5,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"0","ggsave(""../figures/waterfall_probability_plot.svg"", width = 10, height = 5)"
+"2","Warning in geom_texthline(label = ""Completely AI-Generated"", yintercept = 0.5,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"2","Warning in geom_texthline(label = ""Mostly AI-Generated"", yintercept = 0.25,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"2","Warning in geom_texthline(label = ""Mostly Human-Generated"", yintercept = -0.25,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"
+"2","Warning in geom_texthline(label = ""Completely Human-Generated"", yintercept = -0.5,  :"
+"2","
+ "
+"2"," [38;5;255mAll aesthetics have length 1, but the data has 2000 rows.
+[36mℹ[38;5;255m Did you mean to use `annotate()`?[39m
+"

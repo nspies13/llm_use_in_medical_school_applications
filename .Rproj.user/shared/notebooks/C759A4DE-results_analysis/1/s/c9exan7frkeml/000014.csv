@@ -1,0 +1,9 @@
+"0","model_input |> ggplot(aes(x = `Probability Human`, color = Year, alpha = ifelse(Essay == ""Personal Comments"", ""Primary"", ""Secondaries""))) + 
+  stat_ecdf(linewidth = 1.5) + 
+  scico::scale_color_scico_d(palette = ""davos"", end = 0.2, begin = 0.8) + 
+  scale_x_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1), labels = c(""0"", ""0.25"", ""0.5"", ""0.75"", ""1"")) + 
+  theme(strip.clip = ""off"", legend.position = ""none"")
+"
+"2","Warning:"
+"2"," [38;5;255mUsing alpha for a discrete variable is not advised.[39m
+"
